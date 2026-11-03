@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10172a">
+<title>DS Business AI — Painel</title>
+<style>
+:root{--bg:#0b1020;--panel:#121b30;--panel2:#18243d;--line:#293653;--text:#edf2ff;--muted:#9ba9c5;--blue:#6ea8ff;--violet:#9b83ff;--green:#56d6a0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 85% 0%,#20234a 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.layout{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.sidebar{padding:24px 16px;background:#0d1426;border-right:1px solid var(--line);position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 8px 26px}.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--violet));display:grid;place-items:center;color:#081225;font-weight:900;font-size:17px}.brand strong{display:block;letter-spacing:.4px}.brand small{color:var(--muted)}
+.navlabel{font-size:11px;text-transform:uppercase;letter-spacing:1.4px;color:#71809f;padding:10px 10px}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;border:0;background:transparent;color:#b7c3dc;text-align:left;padding:12px;border-radius:11px;margin:3px 0}.nav button.active,.nav button:hover{background:#1c2945;color:white}.nav .ico{width:22px;text-align:center}
+.side-note{position:absolute;bottom:20px;left:16px;right:16px;padding:13px;border:1px solid var(--line);border-radius:13px;color:var(--muted);font-size:12px}
+main{padding:28px clamp(16px,4vw,48px);max-width:1400px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:28px}.eyebrow{color:var(--blue);font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase}h1{font-size:clamp(25px,4vw,36px);margin:5px 0 4px;line-height:1.15}.sub{color:var(--muted);margin:0}.status{border:1px solid #2e604f;color:#8ce6bd;background:#123328;padding:8px 12px;border-radius:30px;font-size:12px;white-space:nowrap}
+.hero{background:linear-gradient(115deg,#1c3155,#30295b 70%,#1b2946);border:1px solid #40517b;border-radius:20px;padding:25px;margin-bottom:22px;position:relative;overflow:hidden}.hero:after{content:"DS";position:absolute;right:22px;top:-32px;font-size:150px;font-weight:900;color:#ffffff0b;letter-spacing:-12px}.hero h2{font-size:23px;margin:0 0 7px}.hero p{color:#c4d0e9;max-width:610px;margin:0 0 17px}.btn{border:0;border-radius:10px;padding:10px 15px;background:linear-gradient(135deg,var(--blue),var(--violet));color:#081225;font-weight:750}.btn.secondary{background:#253451;color:#e9efff;border:1px solid #3a4b6c}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0 24px}.card,.panel{background:linear-gradient(180deg,#151f35,#111a2d);border:1px solid var(--line);border-radius:16px;padding:17px}.metric{font-size:26px;font-weight:800;margin:8px 0 1px}.muted{color:var(--muted);font-size:13px}.platforms{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.platform{display:flex;align-items:center;gap:10px;padding:13px;border:1px solid var(--line);background:#111a2d;border-radius:13px}.platform b{display:block}.platform small{color:var(--muted)}.platform .pico{font-size:22px}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:26px 0 12px}.sectionhead h3{margin:0;font-size:18px}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:15px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:13px;color:#c5d0e5}.field input,.field select,.field textarea{width:100%;padding:11px 12px;background:#0c1425;color:var(--text);border:1px solid #34425f;border-radius:10px;outline:none}.field textarea{min-height:105px;resize:vertical}.result{white-space:pre-wrap;background:#0b1425;border:1px solid #2b3a58;border-radius:12px;padding:14px;min-height:95px;color:#dce6fb;font-size:14px}.hidden{display:none!important}.notice{padding:12px 14px;background:#30291a;border:1px solid #68542a;color:#f2dca6;border-radius:12px;font-size:13px;margin-top:14px}.listrow{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.tag{font-size:11px;color:#a9c8ff;background:#1b3152;padding:4px 8px;border-radius:20px}
+footer{color:#7786a4;font-size:12px;margin:30px 0 8px;text-align:center}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.sidebar{height:auto;position:relative;padding:12px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:4px 6px 10px}.nav{display:flex;overflow:auto;gap:4px}.nav button{white-space:nowrap;width:auto;padding:9px 11px}.navlabel,.side-note{display:none}main{padding-top:22px}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.top{align-items:flex-start;flex-direction:column}.grid2{grid-template-columns:1fr}.platforms{grid-template-columns:repeat(2,1fr)}.hero{padding:20px}.hero:after{font-size:100px;right:8px}.cards{gap:9px}.card{padding:13px}.metric{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">DS</div><div><strong>DS BUSINESS AI</strong><small>Digital Content Studio</small></div></div>
+  <div class="navlabel">Workspace</div>
+  <nav class="nav">
+    <button class="active" data-page="inicio"><span class="ico">⌂</span> Visão geral</button>
+    <button data-page="ideias"><span class="ico">✦</span> Gerador de ideias</button>
+    <button data-page="roteiros"><span class="ico">▤</span> Roteiros</button>
+    <button data-page="calendario"><span class="ico">▦</span> Calendário</button>
+    <button data-page="redes"><span class="ico">◎</span> Redes sociais</button>
+  </nav>
+  <div class="side-note"> <b>Versão inicial</b><br>Protótipo local. As integrações e a geração real por IA serão adicionadas nas próximas etapas.</div>
+</aside>
+<main>
+  <div class="top"><div><div class="eyebrow">O teu estúdio inteligente</div><h1 id="pageTitle">Visão geral</h1><p class="sub" id="pageSub">Planeia, cria e organiza conteúdos num só lugar.</p></div><div class="status">● Protótipo v0.1</div></div>
+  <section id="inicio" class="page">
+    <div class="hero"><div class="eyebrow">Bem-vindo ao teu espaço de trabalho</div><h2>Transforma ideias em conteúdo.</h2><p>O DS Business AI está a ganhar forma. Começa por criar uma ideia, desenvolver um roteiro e organizar a tua produção para cada plataforma.</p><button class="btn" onclick="showPage('ideias')">Criar primeira ideia&nbsp; →</button></div>
+    <div class="cards">
+      <div class="card"><div class="muted">Plataformas previstas</div><div class="metric">04</div><div class="muted">YouTube, Instagram, Facebook, TikTok</div></div>
+      <div class="card"><div class="muted">Agentes planeados</div><div class="metric">10</div><div class="muted">Equipa de produção assistida por IA</div></div>
+      <div class="card"><div class="muted">Conteúdos criados</div><div class="metric" id="countIdeas">00</div><div class="muted">Neste navegador</div></div>
+      <div class="card"><div class="muted">Orçamento do protótipo</div><div class="metric">0</div><div class="muted">Sem serviços pagos ligados</div></div>
+    </div>
+    <div class="sectionhead"><h3>As tuas plataformas</h3><span class="tag">Integrações futuras</span></div>
+    <div class="platforms">
+      <div class="platform"><span class="pico">▶️</span><div><b>YouTube</b><small>Vídeos e Shorts</small></div></div>
+      <div class="platform"><span class="pico">📸</span><div><b>Instagram</b><small>Reels e publicações</small></div></div>
+      <div class="platform"><span class="pico">🔵</span><div><b>Facebook</b><small>Reels e páginas</small></div></div>
+      <div class="platform"><span class="pico">🎵</span><div><b>TikTok</b><small>Vídeos curtos</small></div></div>
+    </div>
+    <div class="sectionhead"><h3>Últimas ideias guardadas</h3></div><div class="panel" id="recent"><p class="muted">Ainda não guardaste ideias. Usa o gerador para começar.</p></div>
+  </section>
+  <section id="ideias" class="page hidden">
+    <div class="panel"><h3>Gerador de ideias de conteúdo</h3><p class="muted">Preenche os campos e cria sugestões estruturadas. Nesta versão, o gerador usa modelos locais — ainda não está ligado a uma API de IA.</p>
+      <div class="grid2"><div>
+        <div class="field"><label for="niche">Tema ou nicho</label><input id="niche" placeholder="Ex.: curiosidades, educação, futebol"></div>
+        <div class="field"><label for="audience">Público-alvo</label><input id="audience" placeholder="Ex.: jovens que gostam de aprender"></div>
+        <div class="field"><label for="format">Formato</label><select id="format"><option>Vídeo curto (15–60 segundos)</option><option>Vídeo longo (3–8 minutos)</option><option>Carrossel / publicação</option></select></div>
+        <button class="btn" onclick="generateIdea()">Gerar ideias</button>
+      </div><div><div class="muted" style="margin-bottom:8px">Resultado</div><div class="result" id="ideaResult">As tuas sugestões aparecerão aqui.</div><button class="btn secondary" style="margin-top:10px" onclick="saveIdea()">Guardar ideia</button></div></div>
+    </div>
+  </section>
+  <section id="roteiros" class="page hidden">
+    <div class="panel"><h3>Organizador de roteiros</h3><p class="muted">Estrutura uma ideia num pequeno plano de gravação.</p>
+      <div class="field"><label for="scriptTopic">Tema do vídeo</label><input id="scriptTopic" placeholder="Escreve o tema"></div>
+      <div class="field"><label for="scriptPlatform">Plataforma principal</label><select id="scriptPlatform"><option>TikTok / Reels / Shorts</option><option>YouTube</option><option>Facebook</option></select></div>
+      <button class="btn" onclick="makeScript()">Criar estrutura</button>
+      <div class="field"><label>Estrutura sugerida</label><div class="result" id="scriptResult">O roteiro aparecerá aqui.</div></div>
+      <button class="btn secondary" onclick="copyScript()">Copiar roteiro</button>
+    </div>
+  </section>
+  <section id="calendario" class="page hidden">
+    <div class="panel"><h3>Calendário editorial</h3><p class="muted">Nesta primeira versão, organiza aqui a tua rotina de publicação.</p>
+      <div class="listrow"><span>Segunda-feira</span><span class="tag">Ideias e pesquisa</span></div>
+      <div class="listrow"><span>Quarta-feira</span><span class="tag">Produção e edição</span></div>
+      <div class="listrow"><span>Sexta-feira</span><span class="tag">Revisão e publicação</span></div>
+      <div class="notice">Este calendário é apenas uma sugestão inicial. Ainda não agenda nem publica automaticamente.</div>
+    </div>
+  </section>
+  <section id="redes" class="page hidden">
+    <div class="panel"><h3>Gestão de redes sociais</h3><p class="muted">As ligações oficiais serão configuradas numa etapa posterior.</p>
+      <div class="listrow"><span>▶️ YouTube</span><span class="tag">Ainda não ligado</span></div>
+      <div class="listrow"><span>📸 Instagram</span><span class="tag">Ainda não ligado</span></div>
+      <div class="listrow"><span>🔵 Facebook</span><span class="tag">Ainda não ligado</span></div>
+      <div class="listrow"><span>🎵 TikTok</span><span class="tag">Ainda não ligado</span></div>
+      <div class="notice">Nunca coloques palavras-passe ou chaves secretas nesta versão de demonstração. As integrações serão feitas através dos sistemas oficiais de autorização.</div>
+    </div>
+  </section>
+  <footer>DS Business AI · Protótipo inicial · Feito para evoluir passo a passo</footer>
+</main>
+</div>
+<script>
+let ideas = JSON.parse(localStorage.getItem('dsbai_ideas') || '[]');
+function updateRecent(){
+ document.getElementById('countIdeas').textContent=String(ideas.length).padStart(2,'0');
+ const el=document.getElementById('recent');
+ if(!ideas.length){el.innerHTML='<p class="muted">Ainda não guardaste ideias. Usa o gerador para começar.</p>';return;}
+ el.innerHTML=ideas.slice(-3).reverse().map(x=>'<div class="listrow"><span>'+escapeHtml(x.title)+'</span><span class="tag">Guardada</span></div>').join('');
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showPage(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(p).classList.remove('hidden');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));
+ const titles={inicio:['Visão geral','Planeia, cria e organiza conteúdos num só lugar.'],ideias:['Gerador de ideias','Encontra um ponto de partida para o teu próximo conteúdo.'],roteiros:['Roteiros','Transforma uma ideia numa estrutura de vídeo.'],calendario:['Calendário','Organiza a tua produção de conteúdos.'],redes:['Redes sociais','Prepara as plataformas que vais gerir.']};
+ document.getElementById('pageTitle').textContent=titles[p][0];document.getElementById('pageSub').textContent=titles[p][1];
+}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function generateIdea(){
+ const n=document.getElementById('niche').value.trim()||'curiosidades';
+ const a=document.getElementById('audience').value.trim()||'público geral';
+ const f=document.getElementById('format').value;
+ const suggestions=[
+ '3 coisas surpreendentes sobre '+n,
+ 'O erro mais comum que as pessoas cometem em '+n,
+ 'O que quase ninguém te explica sobre '+n,
+ 'Mito ou verdade: '+n+'?'
+ ];
+ window.currentIdeas=suggestions.map((s,i)=>({title:s,hook:['“Sabias que isto pode mudar a forma como vês o assunto?”','“Muita gente faz isto sem perceber…”','“Em menos de um minuto, vais entender…”','“Será que isto é mesmo verdade?”'][i],audience:a,format:f}));
+ document.getElementById('ideaResult').textContent=suggestions.map((s,i)=>(i+1)+'. '+s+'\nGancho: '+window.currentIdeas[i].hook).join('\n\n')+'\n\nPúblico: '+a+'\nFormato: '+f;
+}
+function saveIdea(){
+ if(!window.currentIdeas||!window.currentIdeas.length){alert('Gera algumas ideias primeiro.');return;}
+ window.currentIdeas.forEach(x=>ideas.push(x));localStorage.setItem('dsbai_ideas',JSON.stringify(ideas));updateRecent();alert('Ideias guardadas neste navegador.');
+}
+function makeScript(){
+ const t=document.getElementById('scriptTopic').value.trim()||'[o teu tema]';
+ const p=document.getElementById('scriptPlatform').value;
+ document.getElementById('scriptResult').textContent='TEMA: '+t+'\nPLATAFORMA: '+p+'\n\n1. GANCHO (0–3 s)\nAbre com uma pergunta ou facto que desperte curiosidade.\n\n2. DESENVOLVIMENTO\nExplica a ideia em 2 ou 3 pontos simples, com exemplos.\n\n3. MOMENTO FORTE\nApresenta a informação mais surpreendente ou útil.\n\n4. CONCLUSÃO\nResume a mensagem numa frase.\n\n5. CHAMADA À AÇÃO\nConvida o público a comentar ou acompanhar o canal.\n\nNota: confirma os factos antes de publicar.';
+}
+function copyScript(){
+ const t=document.getElementById('scriptResult').textContent;
+ if(!t||t.includes('aparecerá')){alert('Cria primeiro uma estrutura.');return;}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>alert('Roteiro copiado.')).catch(()=>alert('Não foi possível copiar neste navegador.'));
+ else alert('A cópia automática não está disponível neste navegador.');
+}
+updateRecent();
+</script>
+</body>
+</html>
